@@ -1,0 +1,162 @@
+<!-- Solution -->
+<!-- <div class="content">
+  <h2 id="bookTickets">Manage Seating Arrangement</h2>
+
+  <div class="card-container"></div>
+</div> -->
+<div class="content-remove-center">
+  <h1 style="margin-left: 1rem">
+    Manage Seating Arrangement:<mat-icon
+      color="accent"
+      matTooltip="How Use Seat Allocation Engine"
+      (click)="openDialog()"
+      >info</mat-icon
+    >
+  </h1>
+  <!-- Form Input Section - Start -->
+  <div class="formItems">
+    <div class="formItem">
+      <mat-form-field
+        class="form-input-field"
+        appearance="outline"
+        matTooltip="No.of seats available at theatre"
+      >
+        <mat-label>Total Seats</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="TOTAL_SEATS"
+          (input)="setAvailableSeats()"
+        />
+        <!-- <button
+          *ngIf="TOTAL_SEATS"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="TOTAL_SEATS = 0"
+        >
+          <mat-icon>close</mat-icon>
+        </button> -->
+      </mat-form-field>
+    </div>
+    <div class="formItem">
+      <mat-form-field
+        class="form-input-field"
+        appearance="outline"
+        matTooltip="Set by govt regulation"
+      >
+        <mat-label>Govt Occupancy Allowed (%)</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="GOVT_ALLOCATION"
+          (input)="setAvailableSeats()"
+        />
+      </mat-form-field>
+    </div>
+    <div class="formItem">
+      <mat-form-field
+        class="form-input-field"
+        appearance="outline"
+        matTooltip="Equals (GOVT_ALLOCATION / 100) * TOTAL_SEATS))"
+      >
+        <mat-label>Total Seats Available for Booking</mat-label>
+        <input matInput type="number" disabled [(ngModel)]="AVAILABLE_SEATS" />
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Form Input Section - End -->
+  <!-- Block Details Section - Start -->
+  <div class="formItems">
+    <div class="formItem">
+      <mat-form-field class="form-input-field" appearance="outline">
+        <mat-label>No of Blocks</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="NUMBERS_OF_BLOCKS"
+          (blur)="pushBlocks()"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Block Details Section - End -->
+  <!-- Each Block Details Section - Start -->
+  <div class="formItems">
+    <div
+      class="formItem"
+      *ngFor="let seatingBlock of seatingBlocks; index as i"
+    >
+      <p>Block - {{ i }}</p>
+      <mat-form-field class="form-input-field" appearance="outline">
+        <mat-label>No.of Row</mat-label>
+        <input matInput type="number" [(ngModel)]="seatingBlock.rows" />
+      </mat-form-field>
+      <mat-form-field class="form-input-field" appearance="outline">
+        <mat-label>No.of Columns</mat-label>
+        <input matInput type="number" [(ngModel)]="seatingBlock.cols" />
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Each Block Details Section - End -->
+  <!-- Action Buttons - Start -->
+  <div class="formItems">
+    <div class="formItem">
+      <button
+        mat-raised-button
+        matTooltip="Reset to Default (Single Block Scenario)"
+        (click)="reset2Default()"
+      >
+        Reset
+      </button>
+    </div>
+    <div class="formItem">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="showSeatingArrangement()"
+      >
+        Show - Seating Arrangement
+      </button>
+    </div>
+  </div>
+  <!-- Action Buttons - End -->
+  <hr />
+  <h1 *ngIf="showSeating">Seating Arrangement</h1>
+  <!-- Each Block Details Section - Start -->
+  <div class="formItems" *ngIf="showSeating && AVAILABLE_SEATS > 0">
+    <div
+      class="formItem"
+      *ngFor="let seatingBlock of seatingBlocks; index as i"
+    >
+      <p>Block - {{ i }}</p>
+      <div class="formItems" *ngIf="seatingBlock.matrix">
+        <div
+          class="formItem"
+          *ngFor="let cells of seatingBlock.matrix; index as j"
+        >
+          <p *ngFor="let cell of cells; index as k" style="font-size: 18px">
+            <span [class]="cell.availableForBooking ? 'green-bg' : 'grey-bg'"
+              >{{ cell.row }}, {{ cell.col }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="showSeating && AVAILABLE_SEATS == 0">
+    No seats are available for allocation
+  </p>
+  <!-- Each Block Details Section - End -->
+</div>
+<!-- Floating Back to DashBoard Button -->
+<div class="floating-icon">
+  <button
+    mat-icon-button
+    color="primary"
+    routerLink="/home"
+    matTooltip="Return to Dash Board"
+  >
+    <mat-icon>arrow_back_ios</mat-icon>
+  </button>
+</div>
