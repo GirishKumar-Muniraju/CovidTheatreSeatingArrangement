@@ -17,6 +17,7 @@ export class InformationDialog {}
   styleUrls: ['./seat-management.component.scss'],
 })
 export class SeatManagementComponent implements OnInit {
+  seatNumbering: number = 1;
   showSeating: boolean = false;
   TOTAL_SEATS: number = 4;
   GOVT_ALLOCATION: number = 50;
@@ -28,6 +29,7 @@ export class SeatManagementComponent implements OnInit {
       rows: 2,
       cols: 2,
       matrix: Initial2X2Block,
+      seatsAvaible: '',
     },
   ];
   constructor(public dialog: MatDialog) {}
@@ -73,6 +75,7 @@ export class SeatManagementComponent implements OnInit {
         rows: 2,
         cols: 2,
         matrix: Initial2X2Block,
+        seatsAvaible: '',
       },
     ];
     this.setAvailableSeats();
@@ -89,12 +92,15 @@ export class SeatManagementComponent implements OnInit {
         id: i,
         rows: i + 1,
         cols: i + 1,
+        seatsAvaible: '',
+        matrix: [],
       };
       this.seatingBlocks.push(seatBlock);
     });
   }
 
   showSeatingArrangement() {
+    this.seatNumbering = 1;
     this.seatingBlocks.forEach((value, index) => {
       const cellDetails = this.initializeBlock(value.rows, value.cols);
       value.matrix = cellDetails;
@@ -114,6 +120,7 @@ export class SeatManagementComponent implements OnInit {
           col: j,
           isDisabled: false,
           availableForBooking: (i + j) % 2 === 0,
+          name: this.seatNumbering++,
         };
       }
     }
@@ -121,7 +128,18 @@ export class SeatManagementComponent implements OnInit {
     return iCells;
   }
 
-  setAvailableCells() {}
+  setAvailableCells() {
+    this.seatingBlocks.forEach((blocks, index) => {
+      blocks.seatsAvaible = '';
+      for (let block of blocks.matrix) {
+        for (let row of block) {
+          if (row.availableForBooking) {
+            blocks.seatsAvaible += row.name?.toString() + ',';
+          }
+        }
+      }
+    });
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(InformationDialog);

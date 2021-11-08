@@ -124,21 +124,25 @@
   <hr />
   <h1 *ngIf="showSeating">Seating Arrangement</h1>
   <!-- Each Block Details Section - Start -->
-  <div class="formItems" *ngIf="showSeating && AVAILABLE_SEATS > 0">
-    <div
-      class="formItem"
-      *ngFor="let seatingBlock of seatingBlocks; index as i"
-    >
-      <p>Block - {{ i }}</p>
+  <div class="" *ngIf="showSeating && AVAILABLE_SEATS > 0">
+    <div class="" *ngFor="let seatingBlock of seatingBlocks; index as i">
+      <!-- <p>Block - {{ i }}:</p> -->
+      <p>
+        List of Seats available for booking in
+        <b
+          ><u>Block - {{ i }}</u></b
+        >:
+        {{ seatingBlock.seatsAvaible?.toString() }}
+      </p>
       <div class="formItems" *ngIf="seatingBlock.matrix">
         <div
           class="formItem"
           *ngFor="let cells of seatingBlock.matrix; index as j"
         >
           <p *ngFor="let cell of cells; index as k" style="font-size: 18px">
-            <span [class]="cell.availableForBooking ? 'green-bg' : 'grey-bg'"
-              >{{ cell.row }}, {{ cell.col }}</span
-            >
+            <span [class]="cell.availableForBooking ? 'green-bg' : 'grey-bg'">{{
+              cell.name
+            }}</span>
           </p>
         </div>
       </div>
