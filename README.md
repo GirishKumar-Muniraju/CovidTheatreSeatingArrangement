@@ -42,6 +42,13 @@ $ npm run start --> (start the client application)
 
 Click on `Show - Seating Arrangement` button to see engine computations.
 
+### ScreenShots
+
+![Dash Board](/screenShots/DashBoard.PNG?raw=true "Dash Board")
+![Seat Allocation Engine - How to use](/screenShots/SeatAllocationEngine-How2Use.png?raw=true "Seat Allocation Engine - How to use")
+![Seat Allocation Engine - Features](/screenShots/SeatAllocationEngine.png?raw=true "Seat Allocation Engine - Features")
+![Ticket Booking](/screenShots/Ticketbooking.png?raw=true "Ticket Booking")
+
 ### Enhancement Features - On Next Iteration
 
 ```sh
